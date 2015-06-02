@@ -4,7 +4,9 @@ module App.Service {
 		static $inject = ["$q"];
 		constructor(private $q: ng.IQService){
 		}
-		
+		getPayments(): ng.IPromise<Array<App.Model.IPayment>> {
+			return this.$q.when(App.Data.payments);
+		}
 		getPaymentMethods(): ng.IPromise<Array<App.Model.IPaymentMethodOption>> {
 			return this.$q.when(App.Data.paymentMethodDictionary);
 		}

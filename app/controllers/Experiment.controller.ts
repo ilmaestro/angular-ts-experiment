@@ -3,24 +3,28 @@ module App.Controller
 {
 	export class ExperimentController
 	{
+		loading: boolean;
+	
 		lastPaymentID: number = 42;
 		paymentMethod: App.Model.IPaymentMethodOption;
 		newPayment: App.Model.IPayment = <App.Model.IPayment>{};
-		payments: Array<App.Model.IPayment> = [{
-			id: 42,
-			paymentMethod: <App.Model.IPaymentMethodOption>{name: "cash", description: "Cash"}, 
-			amount: 10.0,
-			checkNo: null,
-			reason: null
-		}];
+		payments: Array<App.Model.IPayment>;
 		paymentMethods: Array<App.Model.IPaymentMethodOption>;
 		
-		static $inject = ['$scope', '$http', 'logger', 'paymentService'];
+		static $inject = ['$scope', '$http', '$q', 'logger', 'paymentService'];
 		
-		constructor(private $scope, private $http: ng.IHttpService, private logger: Common.Logger, private paymentService: App.Service.PaymentService)
+		constructor(private $scope, private $http: ng.IHttpService, $q: ng.IQService, private logger: Common.Logger, private paymentService: App.Service.PaymentService)
 		{
-			paymentService.getPaymentMethods().then((data: Array<App.Model.IPaymentMethodOption>) => {
-				this.paymentMethods = data;
+			this.loading = true;
+			$q.all([
+				paymentService.getPaymentMethods(),
+				paymentService.getPayments()
+			]).then((data: any[]): void => {
+				this.paymentMethods = <Array<App.Model.IPaymentMethodOption>> data[0];
+				this.payments = <Array<App.Model.IPayment>> data[1];
+				this.loading = false;
+			}, (error) => {
+				logger.error(error);
 			});
 		}
 		

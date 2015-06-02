@@ -11,4 +11,14 @@ module App.Data {
 		{name: "clean", description: "Cleanup"},			
 		{name: "injury", description: "Injury on the Job"}			
 	];
+	
+	export var payments = <Array<App.Model.IPayment>> [
+		{
+			id: 42,
+			paymentMethod: <App.Model.IPaymentMethodOption>{name: "cash", description: "Cash"}, 
+			amount: 10.0,
+			checkNo: null,
+			reason: null
+		}
+	];
 }
