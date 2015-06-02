@@ -1,0 +1,12 @@
+<div ng-if="componentCtrl.edit">
+	Amount: <input type="number" ng-model="model.amount" required />
+	Reason: <select ng-model="model.reason" 
+					ng-options="reason as reason.description for reason in componentCtrl.reasonOptions"
+					required>
+			</select>
+</div>
+<div ng-if="componentCtrl.view">
+	<strong><span>{{model.paymentMethod.description}}</span></strong>
+	Amount: {{model.amount}}
+	Reason: {{model.reason.description}}
+</div>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+	<link href='http://fonts.googleapis.com/css?family=Graduate' rel='stylesheet' type='text/css'>
+</head>
+<body ng-app="app" style="margin:60px">
+	<h1>Experiment 42</h1>
+
+	<div ng-controller="ExperimentController as ctrl">
+		<h3>New Payment</h3>
+		<div>
+			<select ng-model="ctrl.paymentMethod"
+					ng-options="paymentMethod as paymentMethod.description for paymentMethod in ctrl.paymentMethods"
+					name="payment-method-selection">
+			</select>
+			<button ng-click="ctrl.addNewPayment(ctrl.newPayment, ctrl.paymentMethod)">Add Payment</button>
+		</div>
+		<div ng-switch="ctrl.paymentMethod.name">
+			<div ng-switch-when="cash">
+				<payment-method-cash model="ctrl.newPayment" mode="edit">
+				</payment-method-cash>
+			</div>
+			<div ng-switch-when="check">
+				<payment-method-check model="ctrl.newPayment" mode="edit">
+				</payment-method-check>
+			</div>
+			<div ng-switch-when="paidByStore">
+				<payment-method-paidby-store model="ctrl.newPayment" mode="edit">
+				</payment-method-paidby-store>
+			</div>
+		</div>
+		
+		<h3>Edit Payments</h3>
+		<div ng-repeat="payment in ctrl.payments track by payment.id">
+			<div ng-switch="payment.paymentMethod.name">
+				<div ng-switch-when="cash">
+					<payment-method-cash model="payment" mode="view">
+					</payment-method-cash>
+				</div>
+				<div ng-switch-when="check">
+					<payment-method-check model="payment" mode="view">
+					</payment-method-check>
+				</div>
+				<div ng-switch-when="paidByStore">
+					<payment-method-paidby-store model="payment" mode="view">
+					</payment-method-paidby-store>
+				</div>
+			</div>			
+		</div>
+	</div>
+
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/hammerjs/hammer.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script src="release/js/app.js"></script>
+
+</body>
+</html>

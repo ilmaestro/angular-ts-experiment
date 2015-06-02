@@ -1,0 +1,9 @@
+<div ng-if="componentCtrl.edit">
+	Amount: <input type="number" ng-model="model.amount" required />
+	Check Number: <input type="number" ng-model="model.checkNo" required />
+</div>
+<div ng-if="componentCtrl.view">
+	<strong><span>{{model.paymentMethod.description}}</span></strong>
+	Amount: {{model.amount}}
+	Check Number: {{model.checkNo}}
+</div>
