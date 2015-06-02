@@ -4,8 +4,6 @@ module App.Controller
 	export class ExperimentController
 	{
 		loading: boolean;
-	
-		lastPaymentID: number = 42;
 		paymentMethod: App.Model.IPaymentMethodOption;
 		newPayment: App.Model.IPayment = <App.Model.IPayment>{};
 		payments: Array<App.Model.IPayment>;
@@ -29,13 +27,10 @@ module App.Controller
 		}
 		
 		addNewPayment(payment: App.Model.IPayment, paymentMethod: App.Model.IPaymentMethodOption): void {
-			this.lastPaymentID++;
-			payment.id = this.lastPaymentID;
-			payment.paymentMethod = paymentMethod;
-			this.payments.push(payment);
-			console.log("added payment: ", payment);
-			console.log(this.payments);
+			this.payments.push(this.paymentService.createNewPayment(payment, paymentMethod));
 			this.newPayment = <App.Model.IPayment>{};
 		}
+		
+		
 	}
 }
